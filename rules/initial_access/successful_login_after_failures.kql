@@ -1,0 +1,42 @@
+// Rule: Successful Login After Multiple Failures
+// Description: Detects accounts with 5 or more failed login attempts followed by a successful login within 30 minutes.
+// MITRE ATT&CK Technique: T1110 - Brute Force
+// MITRE Tactic: Initial Access
+// Severity: Medium
+// Author: solosurge
+// Version: 1.0
+
+let FailureThreshold = 5;
+let LookbackWindowMinutes = 30;
+let FailureSummary = SigninLogs
+| where TimeGenerated > ago(24h)
+| where ResultType != "0"
+| summarize
+    FailureCount = count(),
+    FirstFailure = min(TimeGenerated),
+    LastFailure = max(TimeGenerated),
+    FailedIPs = make_set(IPAddress)
+    by UserPrincipalName;
+let SuccessEvents = SigninLogs
+| where TimeGenerated > ago(24h)
+| where ResultType == "0"
+| project UserPrincipalName, SuccessTime = TimeGenerated, SuccessIP = IPAddress, AppDisplayName;
+FailureSummary
+| where FailureCount >= FailureThreshold
+| join kind=inner (SuccessEvents) on UserPrincipalName
+| where SuccessTime > LastFailure
+| where datetime_diff('minute', SuccessTime, LastFailure) <= LookbackWindowMinutes
+| extend MinutesAfterLastFailure = datetime_diff('minute', SuccessTime, LastFailure)
+| project
+    UserPrincipalName,
+    FailureCount,
+    FirstFailure,
+    LastFailure,
+    SuccessTime,
+    SuccessIP,
+    AppDisplayName,
+    MinutesAfterLastFailure,
+    FailedIPs
+| extend AlertSeverity = "Medium"
+| extend RuleName = "Successful Login After Multiple Failures"
+| order by FailureCount desc

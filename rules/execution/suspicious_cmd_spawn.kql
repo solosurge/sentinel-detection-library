@@ -1,0 +1,38 @@
+// Rule: Suspicious cmd.exe Spawned by Unexpected Parent
+// Description: Detects cmd.exe being launched by Office applications or PDF readers, commonly indicating malicious macro or exploit activity.
+// MITRE ATT&CK Technique: T1059.003 - Windows Command Shell
+// MITRE Tactic: Execution
+// Severity: Medium
+// Author: solosurge
+// Version: 1.0
+
+let SuspiciousParents = dynamic([
+    "winword.exe", "excel.exe", "outlook.exe", "powerpnt.exe",
+    "acrord32.exe", "acrobat.exe",
+    "mshta.exe", "wscript.exe", "cscript.exe",
+    "onenote.exe", "visio.exe", "mspub.exe"
+]);
+DeviceProcessEvents
+| where TimeGenerated > ago(1h)
+| where FileName =~ "cmd.exe"
+| where InitiatingProcessFileName has_any (SuspiciousParents)
+| extend
+    ParentApplication = InitiatingProcessFileName,
+    ChildCommandLine = ProcessCommandLine,
+    OfficeApplication = InitiatingProcessFileName in~ ("winword.exe", "excel.exe", "outlook.exe", "powerpnt.exe", "onenote.exe", "visio.exe", "mspub.exe"),
+    PDFApplication = InitiatingProcessFileName in~ ("acrord32.exe", "acrobat.exe"),
+    ScriptHost = InitiatingProcessFileName in~ ("mshta.exe", "wscript.exe", "cscript.exe")
+| project
+    TimeGenerated,
+    DeviceName,
+    AccountName,
+    ParentApplication,
+    InitiatingProcessCommandLine,
+    ChildCommandLine,
+    OfficeApplication,
+    PDFApplication,
+    ScriptHost,
+    InitiatingProcessParentFileName
+| extend AlertSeverity = "Medium"
+| extend RuleName = "Suspicious cmd.exe Spawned by Unexpected Parent"
+| order by TimeGenerated desc

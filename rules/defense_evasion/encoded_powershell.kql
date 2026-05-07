@@ -1,0 +1,35 @@
+// Rule: Base64 Encoded PowerShell Command
+// Description: Detects PowerShell execution using Base64 encoded commands with payload length over 100 characters, indicating obfuscation.
+// MITRE ATT&CK Technique: T1027 - Obfuscated Files or Information
+// MITRE Tactic: Defense Evasion
+// Severity: High
+// Author: solosurge
+// Version: 1.0
+
+DeviceProcessEvents
+| where TimeGenerated > ago(1h)
+| where FileName =~ "powershell.exe" or FileName =~ "pwsh.exe"
+| where ProcessCommandLine matches regex @"(?i)-(?:e|en|enc|enco|encod|encode|encoded|encodedcommand)\s+"
+| extend EncodedPayload = extract(@"(?i)-(?:e|en|enc|enco|encod|encode|encoded|encodedcommand)\s+([A-Za-z0-9+/=]{10,})", 1, ProcessCommandLine)
+| where isnotempty(EncodedPayload)
+| extend PayloadLength = strlen(EncodedPayload)
+| where PayloadLength > 100
+| extend SuspicionLevel = case(
+    PayloadLength > 1000, "Critical",
+    PayloadLength > 500, "High",
+    "Medium"
+)
+| project
+    TimeGenerated,
+    DeviceName,
+    AccountName,
+    FileName,
+    ProcessCommandLine,
+    EncodedPayload,
+    PayloadLength,
+    SuspicionLevel,
+    InitiatingProcessFileName,
+    InitiatingProcessAccountName
+| extend AlertSeverity = "High"
+| extend RuleName = "Base64 Encoded PowerShell Command"
+| order by PayloadLength desc

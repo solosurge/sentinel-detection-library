@@ -1,0 +1,55 @@
+// Rule: New Administrative Account Created
+// Description: Detects when a new user account is created and then added to an administrative role within 24 hours.
+// MITRE ATT&CK Technique: T1136 - Create Account
+// MITRE Tactic: Privilege Escalation
+// Severity: Medium
+// Author: solosurge
+// Version: 1.0
+
+let AdminRoles = dynamic([
+    "Global Administrator",
+    "Privileged Role Administrator",
+    "Security Administrator",
+    "User Administrator",
+    "Exchange Administrator"
+]);
+let NewUsers = AuditLogs
+| where TimeGenerated > ago(48h)
+| where OperationName == "Add user"
+| where Result == "success"
+| mv-expand TargetResources
+| extend
+    NewUserUPN = tostring(TargetResources.userPrincipalName),
+    NewUserDisplayName = tostring(TargetResources.displayName)
+| extend
+    CreatedByUPN = tostring(InitiatedBy.user.userPrincipalName),
+    CreatedByIP = tostring(InitiatedBy.user.ipAddress)
+| project NewUserUPN, NewUserDisplayName, CreatedByUPN, CreatedByIP, UserCreatedTime = TimeGenerated;
+let RoleAssignments = AuditLogs
+| where TimeGenerated > ago(48h)
+| where OperationName == "Add member to role"
+| where Result == "success"
+| mv-expand TargetResources
+| extend TargetUserUPN = tostring(TargetResources.userPrincipalName)
+| mv-expand ModifiedProperties = TargetResources.modifiedProperties
+| where ModifiedProperties.displayName == "Role.DisplayName"
+| extend AssignedRole = tostring(ModifiedProperties.newValue)
+| where AssignedRole has_any (AdminRoles)
+| project TargetUserUPN, AssignedRole, RoleAssignedTime = TimeGenerated;
+NewUsers
+| join kind=inner (RoleAssignments) on $left.NewUserUPN == $right.TargetUserUPN
+| where RoleAssignedTime > UserCreatedTime
+| where datetime_diff('hour', RoleAssignedTime, UserCreatedTime) <= 24
+| extend HoursToPromotion = datetime_diff('hour', RoleAssignedTime, UserCreatedTime)
+| project
+    NewUserUPN,
+    NewUserDisplayName,
+    CreatedByUPN,
+    CreatedByIP,
+    UserCreatedTime,
+    AssignedRole,
+    RoleAssignedTime,
+    HoursToPromotion
+| extend AlertSeverity = "Medium"
+| extend RuleName = "New Administrative Account Created"
+| order by HoursToPromotion asc

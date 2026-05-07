@@ -1,0 +1,35 @@
+[
+  {
+    "id": "slf_mal_001",
+    "TimeGenerated": "2024-01-15T10:00:00Z",
+    "UserPrincipalName": "john.doe@contoso.com",
+    "FailureCount": 8,
+    "FirstFailure": "2024-01-15T09:30:00Z",
+    "LastFailure": "2024-01-15T09:55:00Z",
+    "SuccessTime": "2024-01-15T10:00:00Z",
+    "SuccessIP": "185.220.101.45",
+    "MinutesAfterLastFailure": 5
+  },
+  {
+    "id": "slf_mal_002",
+    "TimeGenerated": "2024-01-15T11:00:00Z",
+    "UserPrincipalName": "jane.smith@contoso.com",
+    "FailureCount": 12,
+    "FirstFailure": "2024-01-15T10:30:00Z",
+    "LastFailure": "2024-01-15T10:50:00Z",
+    "SuccessTime": "2024-01-15T11:00:00Z",
+    "SuccessIP": "194.165.16.11",
+    "MinutesAfterLastFailure": 10
+  },
+  {
+    "id": "slf_mal_003",
+    "TimeGenerated": "2024-01-15T12:00:00Z",
+    "UserPrincipalName": "admin@contoso.com",
+    "FailureCount": 5,
+    "FirstFailure": "2024-01-15T11:35:00Z",
+    "LastFailure": "2024-01-15T11:55:00Z",
+    "SuccessTime": "2024-01-15T12:00:00Z",
+    "SuccessIP": "45.142.212.100",
+    "MinutesAfterLastFailure": 5
+  }
+]

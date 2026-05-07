@@ -1,0 +1,32 @@
+// Rule: Impossible Travel Detected
+// Description: Detects the same user account logging in successfully from two different countries within 60 minutes.
+// MITRE ATT&CK Technique: T1078 - Valid Accounts
+// MITRE Tactic: Initial Access
+// Severity: High
+// Author: solosurge
+// Version: 1.0
+
+let SuccessfulLogins = SigninLogs
+| where TimeGenerated > ago(24h)
+| where ResultType == "0"
+| extend CountryOrRegion = tostring(LocationDetails.countryOrRegion)
+| where isnotempty(CountryOrRegion)
+| project TimeGenerated, UserPrincipalName, IPAddress, CountryOrRegion, Location, AppDisplayName;
+SuccessfulLogins
+| join kind=inner (SuccessfulLogins) on UserPrincipalName
+| where TimeGenerated1 > TimeGenerated
+| where datetime_diff('minute', TimeGenerated1, TimeGenerated) <= 60
+| where CountryOrRegion != CountryOrRegion1
+| extend TravelTimeMinutes = datetime_diff('minute', TimeGenerated1, TimeGenerated)
+| project
+    UserPrincipalName,
+    FirstLoginTime = TimeGenerated,
+    FirstCountry = CountryOrRegion,
+    FirstIP = IPAddress,
+    SecondLoginTime = TimeGenerated1,
+    SecondCountry = CountryOrRegion1,
+    SecondIP = IPAddress1,
+    TravelTimeMinutes
+| extend AlertSeverity = "High"
+| extend RuleName = "Impossible Travel Detected"
+| order by TravelTimeMinutes asc

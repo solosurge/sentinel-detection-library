@@ -1,0 +1,29 @@
+[
+  {
+    "id": "nac_mal_001",
+    "TimeGenerated": "2024-01-15T16:00:00Z",
+    "NewUserUPN": "backdoor.account@contoso.com",
+    "NewUserDisplayName": "Backdoor Account",
+    "CreatedByUPN": "compromised@contoso.com",
+    "AssignedRole": "Global Administrator",
+    "HoursToPromotion": 1
+  },
+  {
+    "id": "nac_mal_002",
+    "TimeGenerated": "2024-01-15T16:05:00Z",
+    "NewUserUPN": "persistence@contoso.com",
+    "NewUserDisplayName": "Persistence User",
+    "CreatedByUPN": "insider@contoso.com",
+    "AssignedRole": "Security Administrator",
+    "HoursToPromotion": 6
+  },
+  {
+    "id": "nac_mal_003",
+    "TimeGenerated": "2024-01-15T16:10:00Z",
+    "NewUserUPN": "shadow.admin@contoso.com",
+    "NewUserDisplayName": "Shadow Admin",
+    "CreatedByUPN": "stolen@contoso.com",
+    "AssignedRole": "Exchange Administrator",
+    "HoursToPromotion": 24
+  }
+]

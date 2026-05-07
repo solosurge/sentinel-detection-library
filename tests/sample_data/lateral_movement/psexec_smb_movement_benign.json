@@ -1,0 +1,33 @@
+[
+  {
+    "id": "psm_ben_001",
+    "TimeGenerated": "2024-01-15T11:00:00Z",
+    "DeviceName": "WORKSTATION-01",
+    "AccountName": "alice",
+    "FileName": "robocopy.exe",
+    "ProcessCommandLine": "robocopy.exe C:\\Data \\\\SERVER-01\\Backups",
+    "RemoteTarget": "SERVER-01",
+    "EventSource": "Process"
+  },
+  {
+    "id": "psm_ben_002",
+    "TimeGenerated": "2024-01-15T11:05:00Z",
+    "DeviceName": "WORKSTATION-02",
+    "AccountName": "bob",
+    "FileName": "net.exe",
+    "ProcessCommandLine": "net.exe use \\\\FILESERVER\\Share",
+    "RemoteTarget": "FILESERVER",
+    "EventSource": "Process"
+  },
+  {
+    "id": "psm_ben_003",
+    "TimeGenerated": "2024-01-15T11:10:00Z",
+    "DeviceName": "SERVER-01",
+    "AccountName": "svcaccount",
+    "FileName": "System",
+    "ShareName": "SharedDocs",
+    "IpAddress": "192.168.1.50",
+    "AccessMask": "0x120089",
+    "EventSource": "SMB Admin Share Access"
+  }
+]

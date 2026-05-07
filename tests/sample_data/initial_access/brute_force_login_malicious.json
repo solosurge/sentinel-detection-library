@@ -1,0 +1,32 @@
+[
+  {
+    "id": "bf_mal_001",
+    "TimeGenerated": "2024-01-15T10:00:00Z",
+    "UserPrincipalName": "john.doe@contoso.com",
+    "IPAddress": "185.220.101.45",
+    "ResultType": "50126",
+    "FailureCount": 15,
+    "DistinctLocations": 1,
+    "Applications": ["Microsoft Teams"]
+  },
+  {
+    "id": "bf_mal_002",
+    "TimeGenerated": "2024-01-15T10:05:00Z",
+    "UserPrincipalName": "jane.smith@contoso.com",
+    "IPAddress": "194.165.16.11",
+    "ResultType": "50053",
+    "FailureCount": 23,
+    "DistinctLocations": 1,
+    "Applications": ["Office 365"]
+  },
+  {
+    "id": "bf_mal_003",
+    "TimeGenerated": "2024-01-15T10:10:00Z",
+    "UserPrincipalName": "admin@contoso.com",
+    "IPAddress": "45.142.212.100",
+    "ResultType": "50126",
+    "FailureCount": 10,
+    "DistinctLocations": 2,
+    "Applications": ["Azure Portal"]
+  }
+]

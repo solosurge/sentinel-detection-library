@@ -1,0 +1,26 @@
+[
+  {
+    "id": "pra_mal_001",
+    "TimeGenerated": "2024-01-15T15:00:00Z",
+    "AssignedRole": "Global Administrator",
+    "TargetUserUPN": "attacker@contoso.com",
+    "InitiatedByUPN": "compromised.admin@contoso.com",
+    "InitiatedByIP": "185.220.101.45"
+  },
+  {
+    "id": "pra_mal_002",
+    "TimeGenerated": "2024-01-15T15:05:00Z",
+    "AssignedRole": "Privileged Role Administrator",
+    "TargetUserUPN": "backdoor@contoso.com",
+    "InitiatedByUPN": "insider@contoso.com",
+    "InitiatedByIP": "203.0.113.50"
+  },
+  {
+    "id": "pra_mal_003",
+    "TimeGenerated": "2024-01-15T15:10:00Z",
+    "AssignedRole": "Security Administrator",
+    "TargetUserUPN": "newaccount@contoso.com",
+    "InitiatedByUPN": "stolen.account@contoso.com",
+    "InitiatedByIP": "194.165.16.30"
+  }
+]

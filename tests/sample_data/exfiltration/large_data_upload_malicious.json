@@ -1,0 +1,35 @@
+[
+  {
+    "id": "ldu_mal_001",
+    "TimeGenerated": "2024-01-15T18:00:00Z",
+    "SourceIP": "192.168.1.100",
+    "DestinationIP": "185.220.101.45",
+    "TotalSentBytes": 2000000000,
+    "SentMB": 1907.35,
+    "SentGB": 1.863,
+    "SessionCount": 5,
+    "Protocols": ["TCP"]
+  },
+  {
+    "id": "ldu_mal_002",
+    "TimeGenerated": "2024-01-15T18:05:00Z",
+    "SourceIP": "192.168.1.105",
+    "DestinationIP": "194.165.16.45",
+    "TotalSentBytes": 750000000,
+    "SentMB": 715.26,
+    "SentGB": 0.698,
+    "SessionCount": 2,
+    "Protocols": ["TCP"]
+  },
+  {
+    "id": "ldu_mal_003",
+    "TimeGenerated": "2024-01-15T18:10:00Z",
+    "SourceIP": "192.168.1.110",
+    "DestinationIP": "45.142.212.100",
+    "TotalSentBytes": 5500000000,
+    "SentMB": 5245.0,
+    "SentGB": 5.122,
+    "SessionCount": 10,
+    "Protocols": ["TCP", "UDP"]
+  }
+]

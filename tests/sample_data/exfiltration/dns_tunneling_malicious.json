@@ -1,0 +1,36 @@
+[
+  {
+    "id": "dt_mal_001",
+    "TimeGenerated": "2024-01-15T19:00:00Z",
+    "ClientIP": "192.168.1.100",
+    "Name": "aGVsbG8td29ybGQtdGhpcy1pcy1hLXZlcnktbG9uZy1zdWJkb21haW4uZXZpbC5jb20=.evil.com",
+    "QueryType": "A",
+    "SubdomainPart": "aGVsbG8td29ybGQtdGhpcy1pcy1hLXZlcnktbG9uZy1zdWJkb21haW4uZXZpbC5jb20=",
+    "SubdomainLength": 76,
+    "LooksBase64": true,
+    "DetectionReason": "Long subdomain length"
+  },
+  {
+    "id": "dt_mal_002",
+    "TimeGenerated": "2024-01-15T19:05:00Z",
+    "ClientIP": "192.168.1.105",
+    "Name": "ZXhmaWx0cmF0aW9uLWRhdGEtY2h1bmstMDAxLWVuY29kZWQtcGF5bG9hZA==.tunnel.evil.com",
+    "QueryType": "TXT",
+    "SubdomainPart": "ZXhmaWx0cmF0aW9uLWRhdGEtY2h1bmstMDAxLWVuY29kZWQtcGF5bG9hZA==",
+    "SubdomainLength": 64,
+    "LooksBase64": true,
+    "DetectionReason": "Long subdomain length"
+  },
+  {
+    "id": "dt_mal_003",
+    "TimeGenerated": "2024-01-15T19:10:00Z",
+    "ClientIP": "192.168.1.110",
+    "Name": "tunnel.evil.com",
+    "QueryType": "HIGH_VOLUME",
+    "SubdomainPart": "",
+    "SubdomainLength": 0,
+    "QueryCount": 350,
+    "LooksBase64": false,
+    "DetectionReason": "High query volume"
+  }
+]

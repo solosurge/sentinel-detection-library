@@ -1,0 +1,35 @@
+[
+  {
+    "id": "ep_mal_001",
+    "TimeGenerated": "2024-01-15T10:00:00Z",
+    "DeviceName": "WORKSTATION-01",
+    "AccountName": "jdoe",
+    "FileName": "powershell.exe",
+    "ProcessCommandLine": "powershell.exe -EncodedCommand SQBFAFgAIAAoAE4AZQB3AC0ATwBiAGoAZQBjAHQAIABOAGUAdAAuAFcAZQBiAEMAbABpAGUAbgB0ACkALgBEAG8AdwBuAGwAbwBhAGQAUwB0AHIAaQBuAGcAKAAn",
+    "EncodedPayload": "SQBFAFgAIAAoAE4AZQB3AC0ATwBiAGoAZQBjAHQAIABOAGUAdAAuAFcAZQBiAEMAbABpAGUAbgB0ACkALgBEAG8AdwBuAGwAbwBhAGQAUwB0AHIAaQBuAGcAKAAn",
+    "PayloadLength": 128,
+    "SuspicionLevel": "High"
+  },
+  {
+    "id": "ep_mal_002",
+    "TimeGenerated": "2024-01-15T10:05:00Z",
+    "DeviceName": "WORKSTATION-02",
+    "AccountName": "jsmith",
+    "FileName": "powershell.exe",
+    "ProcessCommandLine": "powershell.exe -enc JABjAGwAaQBlAG4AdAAgAD0AIABOAGUAdwAtAE8AYgBqAGUAYwB0ACAAUwB5AHMAdABlAG0ALgBOAGUAdAAuAFMAbwBjAGsAZQB0AHMAUQB0AGMAcABDAGwAaQBlAG4AdA==",
+    "EncodedPayload": "JABjAGwAaQBlAG4AdAAgAD0AIABOAGUAdwAtAE8AYgBqAGUAYwB0ACAAUwB5AHMAdABlAG0ALgBOAGUAdAAuAFMAbwBjAGsAZQB0AHMAUQB0AGMAcABDAGwAaQBlAG4AdA==",
+    "PayloadLength": 200,
+    "SuspicionLevel": "High"
+  },
+  {
+    "id": "ep_mal_003",
+    "TimeGenerated": "2024-01-15T10:10:00Z",
+    "DeviceName": "SERVER-01",
+    "AccountName": "administrator",
+    "FileName": "powershell.exe",
+    "ProcessCommandLine": "powershell -EncodedCommand WwBTAHkAcwB0AGUAbQAuAFQAZQB4AHQALgBFAG4AYwBvAGQAaQBuAGcAXQA6ADoAVQBuAGkAYwBvAGQAZQAuAEcAZQB0AEIAeQB0AGUAcwAoACcAbQBhAGwAdwBhAHIAZQAnACkA",
+    "EncodedPayload": "WwBTAHkAcwB0AGUAbQAuAFQAZQB4AHQALgBFAG4AYwBvAGQAaQBuAGcAXQA6ADoAVQBuAGkAYwBvAGQAZQAuAEcAZQB0AEIAeQB0AGUAcwAoACcAbQBhAGwAdwBhAHIAZQAnACkA",
+    "PayloadLength": 512,
+    "SuspicionLevel": "Critical"
+  }
+]

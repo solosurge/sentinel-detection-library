@@ -1,0 +1,29 @@
+[
+  {
+    "id": "sp_ben_001",
+    "TimeGenerated": "2024-01-15T09:00:00Z",
+    "DeviceName": "WORKSTATION-01",
+    "AccountName": "alice",
+    "FileName": "powershell.exe",
+    "ProcessCommandLine": "powershell.exe Get-Service",
+    "InitiatingProcessFileName": "explorer.exe"
+  },
+  {
+    "id": "sp_ben_002",
+    "TimeGenerated": "2024-01-15T09:05:00Z",
+    "DeviceName": "WORKSTATION-02",
+    "AccountName": "bob",
+    "FileName": "powershell.exe",
+    "ProcessCommandLine": "powershell.exe -File C:\\Scripts\\backup.ps1",
+    "InitiatingProcessFileName": "taskschd.exe"
+  },
+  {
+    "id": "sp_ben_003",
+    "TimeGenerated": "2024-01-15T09:10:00Z",
+    "DeviceName": "SERVER-01",
+    "AccountName": "svcaccount",
+    "FileName": "powershell.exe",
+    "ProcessCommandLine": "powershell.exe Get-EventLog -LogName System -Newest 100",
+    "InitiatingProcessFileName": "services.exe"
+  }
+]

@@ -1,0 +1,35 @@
+[
+  {
+    "id": "it_ben_001",
+    "TimeGenerated": "2024-01-15T07:00:00Z",
+    "UserPrincipalName": "alice@contoso.com",
+    "ResultType": "0",
+    "CountryOrRegion": "United States",
+    "CountryOrRegion2": "United States",
+    "TravelTimeMinutes": 30,
+    "FirstIP": "203.0.113.1",
+    "SecondIP": "203.0.113.2"
+  },
+  {
+    "id": "it_ben_002",
+    "TimeGenerated": "2024-01-15T07:30:00Z",
+    "UserPrincipalName": "bob@contoso.com",
+    "ResultType": "0",
+    "CountryOrRegion": "Canada",
+    "CountryOrRegion2": "Canada",
+    "TravelTimeMinutes": 20,
+    "FirstIP": "198.51.100.1",
+    "SecondIP": "198.51.100.2"
+  },
+  {
+    "id": "it_ben_003",
+    "TimeGenerated": "2024-01-15T08:00:00Z",
+    "UserPrincipalName": "carol@contoso.com",
+    "ResultType": "0",
+    "CountryOrRegion": "Australia",
+    "CountryOrRegion2": "Australia",
+    "TravelTimeMinutes": 10,
+    "FirstIP": "203.0.113.3",
+    "SecondIP": "203.0.113.4"
+  }
+]

@@ -1,0 +1,29 @@
+[
+  {
+    "id": "nac_ben_001",
+    "TimeGenerated": "2024-01-15T15:00:00Z",
+    "NewUserUPN": "newemployee@contoso.com",
+    "NewUserDisplayName": "New Employee",
+    "CreatedByUPN": "hr.admin@contoso.com",
+    "AssignedRole": "User Administrator",
+    "HoursToPromotion": 72
+  },
+  {
+    "id": "nac_ben_002",
+    "TimeGenerated": "2024-01-15T15:05:00Z",
+    "NewUserUPN": "contractor@contoso.com",
+    "NewUserDisplayName": "Contractor",
+    "CreatedByUPN": "it.manager@contoso.com",
+    "AssignedRole": "Reports Reader",
+    "HoursToPromotion": 48
+  },
+  {
+    "id": "nac_ben_003",
+    "TimeGenerated": "2024-01-15T15:10:00Z",
+    "NewUserUPN": "intern@contoso.com",
+    "NewUserDisplayName": "Intern",
+    "CreatedByUPN": "hr.director@contoso.com",
+    "AssignedRole": "Helpdesk Administrator",
+    "HoursToPromotion": 168
+  }
+]

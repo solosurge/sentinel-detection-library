@@ -1,0 +1,33 @@
+[
+  {
+    "id": "psm_mal_001",
+    "TimeGenerated": "2024-01-15T12:00:00Z",
+    "DeviceName": "WORKSTATION-01",
+    "AccountName": "jdoe",
+    "FileName": "psexec.exe",
+    "ProcessCommandLine": "psexec.exe \\\\SERVER-01 cmd.exe",
+    "RemoteTarget": "SERVER-01",
+    "EventSource": "PsExec Process"
+  },
+  {
+    "id": "psm_mal_002",
+    "TimeGenerated": "2024-01-15T12:05:00Z",
+    "DeviceName": "WORKSTATION-02",
+    "AccountName": "jsmith",
+    "FileName": "psexec64.exe",
+    "ProcessCommandLine": "psexec64.exe \\\\DC-01 -s cmd.exe",
+    "RemoteTarget": "DC-01",
+    "EventSource": "PsExec Process"
+  },
+  {
+    "id": "psm_mal_003",
+    "TimeGenerated": "2024-01-15T12:10:00Z",
+    "DeviceName": "SERVER-01",
+    "AccountName": "SYSTEM",
+    "FileName": "System",
+    "ShareName": "ADMIN$",
+    "IpAddress": "192.168.1.100",
+    "AccessMask": "0x12019F",
+    "EventSource": "SMB Admin Share Access"
+  }
+]

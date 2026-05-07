@@ -1,0 +1,35 @@
+[
+  {
+    "id": "ldu_ben_001",
+    "TimeGenerated": "2024-01-15T17:00:00Z",
+    "SourceIP": "192.168.1.50",
+    "DestinationIP": "203.0.113.10",
+    "TotalSentBytes": 1048576,
+    "SentMB": 1.0,
+    "SentGB": 0.001,
+    "SessionCount": 1,
+    "Protocols": ["TCP"]
+  },
+  {
+    "id": "ldu_ben_002",
+    "TimeGenerated": "2024-01-15T17:05:00Z",
+    "SourceIP": "192.168.1.55",
+    "DestinationIP": "198.51.100.5",
+    "TotalSentBytes": 52428800,
+    "SentMB": 50.0,
+    "SentGB": 0.049,
+    "SessionCount": 1,
+    "Protocols": ["TCP"]
+  },
+  {
+    "id": "ldu_ben_003",
+    "TimeGenerated": "2024-01-15T17:10:00Z",
+    "SourceIP": "192.168.1.60",
+    "DestinationIP": "10.0.0.5",
+    "TotalSentBytes": 499999999,
+    "SentMB": 476.84,
+    "SentGB": 0.466,
+    "SessionCount": 3,
+    "Protocols": ["TCP"]
+  }
+]

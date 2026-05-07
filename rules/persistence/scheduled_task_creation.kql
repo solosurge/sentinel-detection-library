@@ -1,0 +1,47 @@
+// Rule: Suspicious Scheduled Task Created
+// Description: Detects Windows Scheduled Task creation events where the task action references suspicious paths, PowerShell, or encoded commands.
+// MITRE ATT&CK Technique: T1053.005 - Scheduled Task
+// MITRE Tactic: Persistence
+// Severity: Medium
+// Author: solosurge
+// Version: 1.0
+
+let SuspiciousPaths = dynamic([
+    "\\temp\\", "\\tmp\\", "\\appdata\\local\\temp\\",
+    "\\users\\public\\", "\\programdata\\"
+]);
+let SuspiciousKeywords = dynamic([
+    "powershell", "cmd /c", "wscript", "cscript", "mshta",
+    "-encodedcommand", "-enc ", "frombase64",
+    "invoke-expression", "iex", "downloadstring",
+    "certutil", "regsvr32", "rundll32"
+]);
+SecurityEvent
+| where TimeGenerated > ago(1h)
+| where EventID == 4698
+| extend
+    TaskName = tostring(EventData.TaskName),
+    TaskContent = tostring(EventData.TaskContent),
+    SubjectUserName = tostring(EventData.SubjectUserName),
+    SubjectDomainName = tostring(EventData.SubjectDomainName),
+    SubjectLogonId = tostring(EventData.SubjectLogonId)
+| extend TaskContentLower = tolower(TaskContent)
+| where
+    TaskContentLower has_any (SuspiciousPaths) or
+    TaskContentLower has_any (SuspiciousKeywords)
+| extend
+    UsesSuspiciousPath = TaskContentLower has_any (SuspiciousPaths),
+    UsesLolbas = TaskContentLower has_any (SuspiciousKeywords)
+| project
+    TimeGenerated,
+    Computer,
+    SubjectUserName,
+    SubjectDomainName,
+    SubjectLogonId,
+    TaskName,
+    UsesSuspiciousPath,
+    UsesLolbas,
+    TaskContent
+| extend AlertSeverity = "Medium"
+| extend RuleName = "Suspicious Scheduled Task Created"
+| order by TimeGenerated desc

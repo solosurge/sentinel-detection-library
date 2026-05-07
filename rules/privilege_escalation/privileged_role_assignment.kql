@@ -1,0 +1,44 @@
+// Rule: Privileged Role Assigned to User
+// Description: Detects when a user is added to a highly privileged Azure AD role such as Global Administrator.
+// MITRE ATT&CK Technique: T1078.004 - Cloud Accounts
+// MITRE Tactic: Privilege Escalation
+// Severity: High
+// Author: solosurge
+// Version: 1.0
+
+let PrivilegedRoles = dynamic([
+    "Global Administrator",
+    "Privileged Role Administrator",
+    "Security Administrator",
+    "Exchange Administrator",
+    "SharePoint Administrator",
+    "Hybrid Identity Administrator",
+    "Application Administrator",
+    "Cloud Application Administrator"
+]);
+AuditLogs
+| where TimeGenerated > ago(24h)
+| where OperationName == "Add member to role"
+| where Result == "success"
+| mv-expand TargetResources
+| extend
+    TargetUserUPN = tostring(TargetResources.userPrincipalName),
+    RoleName = tostring(TargetResources.displayName),
+    ModifiedProperties = TargetResources.modifiedProperties
+| mv-expand ModifiedProperties
+| where ModifiedProperties.displayName == "Role.DisplayName"
+| extend AssignedRole = tostring(ModifiedProperties.newValue)
+| where AssignedRole has_any (PrivilegedRoles)
+| extend
+    InitiatedByUPN = tostring(InitiatedBy.user.userPrincipalName),
+    InitiatedByIP = tostring(InitiatedBy.user.ipAddress)
+| project
+    TimeGenerated,
+    AssignedRole,
+    TargetUserUPN,
+    InitiatedByUPN,
+    InitiatedByIP,
+    CorrelationId
+| extend AlertSeverity = "High"
+| extend RuleName = "Privileged Role Assigned to User"
+| order by TimeGenerated desc

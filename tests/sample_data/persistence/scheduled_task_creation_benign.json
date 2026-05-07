@@ -1,0 +1,32 @@
+[
+  {
+    "id": "stc_ben_001",
+    "TimeGenerated": "2024-01-15T14:00:00Z",
+    "Computer": "WORKSTATION-01",
+    "SubjectUserName": "alice",
+    "TaskName": "\\Microsoft\\Windows\\Defrag\\ScheduledDefrag",
+    "TaskContent": "<Actions><Exec><Command>defrag.exe</Command><Arguments>/E /H /U /V</Arguments></Exec></Actions>",
+    "UsesSuspiciousPath": false,
+    "UsesLolbas": false
+  },
+  {
+    "id": "stc_ben_002",
+    "TimeGenerated": "2024-01-15T14:05:00Z",
+    "Computer": "WORKSTATION-02",
+    "SubjectUserName": "bob",
+    "TaskName": "\\BackupJob",
+    "TaskContent": "<Actions><Exec><Command>robocopy.exe</Command><Arguments>C:\\Data D:\\Backup /MIR</Arguments></Exec></Actions>",
+    "UsesSuspiciousPath": false,
+    "UsesLolbas": false
+  },
+  {
+    "id": "stc_ben_003",
+    "TimeGenerated": "2024-01-15T14:10:00Z",
+    "Computer": "SERVER-01",
+    "SubjectUserName": "svcaccount",
+    "TaskName": "\\WeeklyReport",
+    "TaskContent": "<Actions><Exec><Command>wscript.exe</Command><Arguments>C:\\Scripts\\report.vbs</Arguments></Exec></Actions>",
+    "UsesSuspiciousPath": false,
+    "UsesLolbas": false
+  }
+]

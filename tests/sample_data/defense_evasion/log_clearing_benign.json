@@ -1,0 +1,32 @@
+[
+  {
+    "id": "lc_ben_001",
+    "TimeGenerated": "2024-01-15T16:00:00Z",
+    "Computer": "WORKSTATION-01",
+    "EventID": 4624,
+    "ClearedLog": "N/A",
+    "SubjectUserName": "alice",
+    "SubjectDomainName": "CONTOSO",
+    "SubjectLogonId": "0x3E7"
+  },
+  {
+    "id": "lc_ben_002",
+    "TimeGenerated": "2024-01-15T16:05:00Z",
+    "Computer": "WORKSTATION-02",
+    "EventID": 4688,
+    "ClearedLog": "N/A",
+    "SubjectUserName": "bob",
+    "SubjectDomainName": "CONTOSO",
+    "SubjectLogonId": "0x3E8"
+  },
+  {
+    "id": "lc_ben_003",
+    "TimeGenerated": "2024-01-15T16:10:00Z",
+    "Computer": "SERVER-01",
+    "EventID": 4776,
+    "ClearedLog": "N/A",
+    "SubjectUserName": "svcaccount",
+    "SubjectDomainName": "CONTOSO",
+    "SubjectLogonId": "0x1F4"
+  }
+]

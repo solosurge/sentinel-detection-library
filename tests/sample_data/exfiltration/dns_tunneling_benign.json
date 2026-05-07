@@ -1,0 +1,38 @@
+[
+  {
+    "id": "dt_ben_001",
+    "TimeGenerated": "2024-01-15T18:00:00Z",
+    "ClientIP": "192.168.1.50",
+    "Name": "www.microsoft.com",
+    "QueryType": "A",
+    "SubdomainPart": "www",
+    "SubdomainLength": 3,
+    "QueryCount": 5,
+    "LooksBase64": false,
+    "DetectionReason": "Normal query"
+  },
+  {
+    "id": "dt_ben_002",
+    "TimeGenerated": "2024-01-15T18:05:00Z",
+    "ClientIP": "192.168.1.55",
+    "Name": "api.contoso.com",
+    "QueryType": "A",
+    "SubdomainPart": "api",
+    "SubdomainLength": 3,
+    "QueryCount": 25,
+    "LooksBase64": false,
+    "DetectionReason": "Normal query"
+  },
+  {
+    "id": "dt_ben_003",
+    "TimeGenerated": "2024-01-15T18:10:00Z",
+    "ClientIP": "192.168.1.60",
+    "Name": "mail.office365.com",
+    "QueryType": "MX",
+    "SubdomainPart": "mail",
+    "SubdomainLength": 4,
+    "QueryCount": 100,
+    "LooksBase64": false,
+    "DetectionReason": "Normal query"
+  }
+]

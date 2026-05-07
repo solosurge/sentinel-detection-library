@@ -1,0 +1,50 @@
+// Rule: Security Tool or Audit Logging Disabled
+// Description: Detects Windows audit policy changes or security service stop/disable events affecting Microsoft Defender or Windows Event Log.
+// MITRE ATT&CK Technique: T1562.001 - Disable or Modify Tools
+// MITRE Tactic: Defense Evasion
+// Severity: Critical
+// Author: solosurge
+// Version: 1.0
+
+let SecurityServiceNames = dynamic([
+    "Windows Defender", "WinDefend", "MsMpEng",
+    "Sense", "SecurityHealthService",
+    "Windows Event Log", "EventLog",
+    "Microsoft Defender", "MpsSvc",
+    "SysMain", "WdFilter", "WdBoot", "WdNisSvc"
+]);
+SecurityEvent
+| where TimeGenerated > ago(1h)
+| where EventID in (4719, 7036, 7040)
+| extend
+    EventDescription = case(
+        EventID == 4719, "Audit Policy Changed",
+        EventID == 7036, "Service State Changed",
+        EventID == 7040, "Service Start Type Changed",
+        "Unknown"
+    ),
+    ServiceName = tostring(EventData.param1),
+    ServiceState = tostring(EventData.param2),
+    SubjectUserName = tostring(EventData.SubjectUserName),
+    SubjectDomainName = tostring(EventData.SubjectDomainName),
+    SubjectLogonId = tostring(EventData.SubjectLogonId),
+    AuditPolicyChange = tostring(EventData.AuditPolicyChanges)
+| where
+    (EventID == 4719) or
+    (EventID in (7036, 7040) and ServiceName has_any (SecurityServiceNames))
+| where
+    ServiceState has_any ("stopped", "disabled") or EventID == 4719
+| project
+    TimeGenerated,
+    Computer,
+    EventID,
+    EventDescription,
+    ServiceName,
+    ServiceState,
+    SubjectUserName,
+    SubjectDomainName,
+    SubjectLogonId,
+    AuditPolicyChange
+| extend AlertSeverity = "Critical"
+| extend RuleName = "Security Tool or Audit Logging Disabled"
+| order by TimeGenerated desc

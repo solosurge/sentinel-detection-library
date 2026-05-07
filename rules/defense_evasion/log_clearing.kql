@@ -1,0 +1,33 @@
+// Rule: Windows Event Log Cleared
+// Description: Detects Windows Security log (EventID 1102) or System log (EventID 104) clearing events, a common attacker anti-forensics technique.
+// MITRE ATT&CK Technique: T1070.001 - Clear Windows Event Logs
+// MITRE Tactic: Defense Evasion
+// Severity: High
+// Author: solosurge
+// Version: 1.0
+
+SecurityEvent
+| where TimeGenerated > ago(1h)
+| where EventID in (1102, 104)
+| extend
+    ClearedLog = case(
+        EventID == 1102, "Security",
+        EventID == 104, "System",
+        "Unknown"
+    ),
+    SubjectUserName = tostring(EventData.SubjectUserName),
+    SubjectDomainName = tostring(EventData.SubjectDomainName),
+    SubjectLogonId = tostring(EventData.SubjectLogonId),
+    SubjectUserSid = tostring(EventData.SubjectUserSid)
+| project
+    TimeGenerated,
+    Computer,
+    EventID,
+    ClearedLog,
+    SubjectUserName,
+    SubjectDomainName,
+    SubjectLogonId,
+    SubjectUserSid
+| extend AlertSeverity = "High"
+| extend RuleName = "Windows Event Log Cleared"
+| order by TimeGenerated desc

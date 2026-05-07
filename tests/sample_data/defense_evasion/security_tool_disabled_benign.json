@@ -1,0 +1,32 @@
+[
+  {
+    "id": "std_ben_001",
+    "TimeGenerated": "2024-01-15T15:00:00Z",
+    "Computer": "WORKSTATION-01",
+    "EventID": 4624,
+    "EventDescription": "Successful Logon",
+    "ServiceName": "N/A",
+    "ServiceState": "N/A",
+    "SubjectUserName": "alice"
+  },
+  {
+    "id": "std_ben_002",
+    "TimeGenerated": "2024-01-15T15:05:00Z",
+    "Computer": "WORKSTATION-02",
+    "EventID": 4648,
+    "EventDescription": "Logon with Explicit Credentials",
+    "ServiceName": "N/A",
+    "ServiceState": "N/A",
+    "SubjectUserName": "bob"
+  },
+  {
+    "id": "std_ben_003",
+    "TimeGenerated": "2024-01-15T15:10:00Z",
+    "Computer": "SERVER-01",
+    "EventID": 4688,
+    "EventDescription": "Process Created",
+    "ServiceName": "N/A",
+    "ServiceState": "N/A",
+    "SubjectUserName": "svcaccount"
+  }
+]

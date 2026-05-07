@@ -1,0 +1,43 @@
+// Rule: Large Data Upload to External IP
+// Description: Detects single-session outbound data transfers exceeding 500MB to non-whitelisted external IP addresses.
+// MITRE ATT&CK Technique: T1048 - Exfiltration Over Alternative Protocol
+// MITRE Tactic: Exfiltration
+// Severity: High
+// Author: solosurge
+// Version: 1.0
+
+let KnownSafeIPs = dynamic([
+    "8.8.8.8", "8.8.4.4",
+    "1.1.1.1", "1.0.0.1",
+    "13.107.42.14", "13.107.6.152",
+    "52.96.0.0", "40.96.0.0"
+]);
+let ExfiltrationThresholdBytes = 500000000;
+CommonSecurityLog
+| where TimeGenerated > ago(1h)
+| where SentBytes > ExfiltrationThresholdBytes
+| where not(DestinationIP has_any (KnownSafeIPs))
+| where DestinationIP !startswith "10."
+    and DestinationIP !startswith "172.16."
+    and DestinationIP !startswith "172.17."
+    and DestinationIP !startswith "192.168."
+    and DestinationIP !startswith "127."
+| summarize
+    TotalSentBytes = sum(SentBytes),
+    TotalReceivedBytes = sum(ReceivedBytes),
+    SessionCount = count(),
+    Protocols = make_set(Protocol),
+    DestinationPorts = make_set(DestinationPort),
+    FirstSeen = min(TimeGenerated),
+    LastSeen = max(TimeGenerated)
+    by SourceIP, DestinationIP, bin(TimeGenerated, 1h)
+| extend SentMB = round(todouble(TotalSentBytes) / 1048576, 2)
+| extend SentGB = round(todouble(TotalSentBytes) / 1073741824, 3)
+| extend AlertSeverity = case(
+    TotalSentBytes > 5000000000, "Critical",
+    TotalSentBytes > 1000000000, "High",
+    "Medium"
+)
+| project-reorder TimeGenerated, SourceIP, DestinationIP, SentMB, SentGB, TotalReceivedBytes, SessionCount, Protocols, DestinationPorts, FirstSeen, LastSeen, AlertSeverity
+| extend RuleName = "Large Data Upload to External IP"
+| order by TotalSentBytes desc

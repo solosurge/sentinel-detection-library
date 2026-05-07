@@ -1,0 +1,42 @@
+// Rule: DNS Tunneling Indicators
+// Description: Detects DNS queries with unusually long subdomains or high query volume from a single source, indicating potential DNS tunneling for C2 or data exfiltration.
+// MITRE ATT&CK Technique: T1071.004 - DNS
+// MITRE Tactic: Exfiltration
+// Severity: High
+// Author: solosurge
+// Version: 1.0
+
+let LongSubdomainThreshold = 50;
+let HighVolumeThreshold = 200;
+let Base64Pattern = @"^[A-Za-z0-9+/]{20,}={0,2}$";
+let LongSubdomainEvents = DnsEvents
+| where TimeGenerated > ago(1h)
+| where EventId == 3008 or isempty(EventId)
+| extend SubdomainPart = extract(@"^([^.]+)\.", 1, Name)
+| where strlen(SubdomainPart) > LongSubdomainThreshold
+    or strlen(Name) > 100
+| extend DetectionReason = "Long subdomain length"
+| extend SubdomainLength = strlen(SubdomainPart)
+| extend LooksBase64 = SubdomainPart matches regex Base64Pattern
+| project TimeGenerated, ClientIP, Name, QueryType, SubdomainPart, SubdomainLength, LooksBase64, DetectionReason;
+let HighVolumeEvents = DnsEvents
+| where TimeGenerated > ago(1h)
+| where EventId == 3008 or isempty(EventId)
+| extend BaseDomain = extract(@"([^.]+\.[^.]+)$", 1, Name)
+| summarize
+    QueryCount = count(),
+    UniqueSubdomains = dcount(Name),
+    SubdomainList = make_set(Name, 10),
+    FirstQuery = min(TimeGenerated),
+    LastQuery = max(TimeGenerated)
+    by ClientIP, BaseDomain, bin(TimeGenerated, 1h)
+| where QueryCount > HighVolumeThreshold
+| extend DetectionReason = "High query volume"
+| extend SubdomainPart = ""
+| extend SubdomainLength = 0
+| extend LooksBase64 = false
+| project TimeGenerated, ClientIP, Name = BaseDomain, QueryType = "HIGH_VOLUME", SubdomainPart, SubdomainLength, LooksBase64, DetectionReason;
+union LongSubdomainEvents, HighVolumeEvents
+| extend AlertSeverity = "High"
+| extend RuleName = "DNS Tunneling Indicators"
+| order by TimeGenerated desc

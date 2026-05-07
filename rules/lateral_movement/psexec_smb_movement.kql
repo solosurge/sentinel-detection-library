@@ -1,0 +1,34 @@
+// Rule: Lateral Movement via PsExec or SMB
+// Description: Detects PsExec execution or administrative share access patterns commonly used for lateral movement between hosts.
+// MITRE ATT&CK Technique: T1570 - Lateral Tool Transfer
+// MITRE Tactic: Lateral Movement
+// Severity: High
+// Author: solosurge
+// Version: 1.0
+
+let PsExecEvents = DeviceProcessEvents
+| where TimeGenerated > ago(1h)
+| where FileName =~ "psexec.exe" or FileName =~ "psexec64.exe"
+    or ProcessCommandLine matches regex @"(?i)\\\\[a-z0-9\-\.]+\\admin\$"
+| extend EventSource = "PsExec Process", RemoteTarget = extract(@"(?i)\\\\([a-z0-9\-\.]+)\\", 1, ProcessCommandLine)
+| project TimeGenerated, DeviceName, AccountName, FileName, ProcessCommandLine, RemoteTarget, EventSource;
+let SMBAdminShareEvents = SecurityEvent
+| where TimeGenerated > ago(1h)
+| where EventID == 5145
+| extend
+    ShareName = tostring(EventData.ShareName),
+    RelativeTargetName = tostring(EventData.RelativeTargetName),
+    SubjectUserName = tostring(EventData.SubjectUserName),
+    SubjectDomainName = tostring(EventData.SubjectDomainName),
+    IpAddress = tostring(EventData.IpAddress),
+    AccessMask = tostring(EventData.AccessMask)
+| where ShareName endswith "ADMIN$"
+    or ShareName endswith "IPC$"
+    or ShareName endswith "C$"
+| where AccessMask !in ("0x120089", "0x1200a9")
+| extend EventSource = "SMB Admin Share Access", RemoteTarget = Computer
+| project TimeGenerated, Computer, SubjectUserName, SubjectDomainName, ShareName, RelativeTargetName, IpAddress, AccessMask, EventSource;
+union PsExecEvents, SMBAdminShareEvents
+| extend AlertSeverity = "High"
+| extend RuleName = "Lateral Movement via PsExec or SMB"
+| order by TimeGenerated desc

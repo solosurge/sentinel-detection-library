@@ -1,0 +1,24 @@
+// Rule: Brute Force Login Attempts Detected
+// Description: Detects accounts with 10 or more failed login attempts within a 1-hour window.
+// MITRE ATT&CK Technique: T1110.001 - Password Guessing
+// MITRE Tactic: Initial Access
+// Severity: Medium
+// Author: solosurge
+// Version: 1.0
+
+SigninLogs
+| where TimeGenerated > ago(1h)
+| where ResultType != "0"
+| summarize
+    FailureCount = count(),
+    DistinctLocations = dcount(Location),
+    Applications = make_set(AppDisplayName),
+    FirstAttempt = min(TimeGenerated),
+    LastAttempt = max(TimeGenerated)
+    by UserPrincipalName, IPAddress, bin(TimeGenerated, 1h)
+| where FailureCount >= 10
+| extend AlertThreshold = 10
+| extend AlertSeverity = "Medium"
+| extend RuleName = "Brute Force Login Attempts Detected"
+| project-reorder TimeGenerated, UserPrincipalName, IPAddress, FailureCount, AlertThreshold, DistinctLocations, Applications, FirstAttempt, LastAttempt, AlertSeverity, RuleName
+| order by FailureCount desc

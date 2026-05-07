@@ -1,0 +1,34 @@
+// Rule: WMI Remote Code Execution
+// Description: Detects WmiPrvSE.exe spawning interactive shells or scripting engines, indicating remote WMI-based code execution.
+// MITRE ATT&CK Technique: T1047 - Windows Management Instrumentation
+// MITRE Tactic: Execution
+// Severity: High
+// Author: solosurge
+// Version: 1.0
+
+let SuspiciousChildren = dynamic(["cmd.exe", "powershell.exe", "pwsh.exe", "cscript.exe", "wscript.exe", "mshta.exe", "certutil.exe"]);
+let KnownBenignCmdLines = dynamic(["wmiadap.exe", "wmiprvse.exe /secured /Embedding"]);
+DeviceProcessEvents
+| where TimeGenerated > ago(1h)
+| where InitiatingProcessFileName =~ "WmiPrvSE.exe"
+| where FileName has_any (SuspiciousChildren)
+| where not(ProcessCommandLine has_any (KnownBenignCmdLines))
+| extend
+    IsInteractiveShell = FileName in~ ("cmd.exe", "powershell.exe", "pwsh.exe"),
+    IsScriptEngine = FileName in~ ("cscript.exe", "wscript.exe", "mshta.exe"),
+    IsLivingOffLand = FileName in~ ("certutil.exe")
+| project
+    TimeGenerated,
+    DeviceName,
+    AccountName,
+    InitiatingProcessFileName,
+    InitiatingProcessCommandLine,
+    FileName,
+    ProcessCommandLine,
+    InitiatingProcessParentFileName,
+    IsInteractiveShell,
+    IsScriptEngine,
+    IsLivingOffLand
+| extend AlertSeverity = "High"
+| extend RuleName = "WMI Remote Code Execution"
+| order by TimeGenerated desc

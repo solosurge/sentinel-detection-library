@@ -1,0 +1,32 @@
+[
+  {
+    "id": "std_mal_001",
+    "TimeGenerated": "2024-01-15T16:00:00Z",
+    "Computer": "WORKSTATION-01",
+    "EventID": 7036,
+    "EventDescription": "Service State Changed",
+    "ServiceName": "Windows Defender",
+    "ServiceState": "stopped",
+    "SubjectUserName": "jdoe"
+  },
+  {
+    "id": "std_mal_002",
+    "TimeGenerated": "2024-01-15T16:05:00Z",
+    "Computer": "WORKSTATION-02",
+    "EventID": 7040,
+    "EventDescription": "Service Start Type Changed",
+    "ServiceName": "WinDefend",
+    "ServiceState": "disabled",
+    "SubjectUserName": "jsmith"
+  },
+  {
+    "id": "std_mal_003",
+    "TimeGenerated": "2024-01-15T16:10:00Z",
+    "Computer": "SERVER-01",
+    "EventID": 4719,
+    "EventDescription": "Audit Policy Changed",
+    "ServiceName": "EventLog",
+    "ServiceState": "stopped",
+    "SubjectUserName": "administrator"
+  }
+]

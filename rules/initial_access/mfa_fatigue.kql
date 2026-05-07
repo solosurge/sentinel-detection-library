@@ -1,0 +1,27 @@
+// Rule: MFA Fatigue Attack - Excessive Push Notifications
+// Description: Detects users receiving 10 or more MFA push notifications within 1 hour, indicating a potential MFA fatigue attack.
+// MITRE ATT&CK Technique: T1621 - Multi-Factor Authentication Request Generation
+// MITRE Tactic: Initial Access
+// Severity: High
+// Author: solosurge
+// Version: 1.0
+
+SigninLogs
+| where TimeGenerated > ago(1h)
+| where ResultType in ("50074", "50076") or (AuthenticationRequirement == "multiFactorAuthentication" and ResultType != "0")
+| mv-expand todynamic(AuthenticationDetails)
+| where AuthenticationDetails.authenticationMethod =~ "Mobile app notification"
+    or AuthenticationDetails.authenticationMethod =~ "Mobile app"
+| summarize
+    MFAPushCount = count(),
+    DistinctIPs = dcount(IPAddress),
+    IPList = make_set(IPAddress),
+    FirstRequest = min(TimeGenerated),
+    LastRequest = max(TimeGenerated)
+    by UserPrincipalName, bin(TimeGenerated, 1h)
+| where MFAPushCount >= 10
+| extend AlertThreshold = 10
+| extend AlertSeverity = "High"
+| extend RuleName = "MFA Fatigue Attack - Excessive Push Notifications"
+| project-reorder TimeGenerated, UserPrincipalName, MFAPushCount, AlertThreshold, DistinctIPs, IPList, FirstRequest, LastRequest, AlertSeverity, RuleName
+| order by MFAPushCount desc

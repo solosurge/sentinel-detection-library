@@ -1,0 +1,35 @@
+[
+  {
+    "id": "it_mal_001",
+    "TimeGenerated": "2024-01-15T08:00:00Z",
+    "UserPrincipalName": "john.doe@contoso.com",
+    "ResultType": "0",
+    "CountryOrRegion": "United States",
+    "CountryOrRegion2": "Russia",
+    "TravelTimeMinutes": 15,
+    "FirstIP": "203.0.113.5",
+    "SecondIP": "185.220.101.45"
+  },
+  {
+    "id": "it_mal_002",
+    "TimeGenerated": "2024-01-15T09:00:00Z",
+    "UserPrincipalName": "jane.smith@contoso.com",
+    "ResultType": "0",
+    "CountryOrRegion": "United Kingdom",
+    "CountryOrRegion2": "China",
+    "TravelTimeMinutes": 45,
+    "FirstIP": "198.51.100.10",
+    "SecondIP": "1.180.0.1"
+  },
+  {
+    "id": "it_mal_003",
+    "TimeGenerated": "2024-01-15T10:00:00Z",
+    "UserPrincipalName": "admin@contoso.com",
+    "ResultType": "0",
+    "CountryOrRegion": "Germany",
+    "CountryOrRegion2": "North Korea",
+    "TravelTimeMinutes": 60,
+    "FirstIP": "195.148.127.10",
+    "SecondIP": "175.45.176.1"
+  }
+]

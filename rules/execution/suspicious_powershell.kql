@@ -1,0 +1,43 @@
+// Rule: Suspicious PowerShell Execution Detected
+// Description: Detects PowerShell processes using known-malicious flags or techniques such as encoded commands, download cradles, or execution policy bypass.
+// MITRE ATT&CK Technique: T1059.001 - PowerShell
+// MITRE Tactic: Execution
+// Severity: High
+// Author: solosurge
+// Version: 1.0
+
+let SuspiciousKeywords = dynamic([
+    "-EncodedCommand", "-enc ", "-ec ",
+    "-WindowStyle Hidden", "-w hidden", "-WindowStyle h",
+    "IEX(", "IEX (", "Invoke-Expression",
+    "DownloadString", "DownloadFile", "WebClient",
+    "FromBase64String",
+    "-ExecutionPolicy Bypass", "-ep bypass",
+    "Net.WebClient", "reflection.assembly", "load("
+]);
+let KnownAdminProcesses = dynamic(["mmc.exe", "services.msc", "taskschd.msc", "gpmc.msc"]);
+DeviceProcessEvents
+| where TimeGenerated > ago(1h)
+| where FileName =~ "powershell.exe" or FileName =~ "pwsh.exe"
+| where ProcessCommandLine has_any (SuspiciousKeywords)
+| where not(InitiatingProcessFileName has_any (KnownAdminProcesses))
+| extend
+    EncodedCommandPresent = ProcessCommandLine has_any ("-EncodedCommand", "-enc", "-ec"),
+    DownloadCradle = ProcessCommandLine has_any ("DownloadString", "WebClient", "Net.WebClient"),
+    HiddenWindow = ProcessCommandLine has_any ("-WindowStyle Hidden", "-w hidden"),
+    BypassPolicy = ProcessCommandLine has_any ("-ExecutionPolicy Bypass", "-ep bypass")
+| project
+    TimeGenerated,
+    DeviceName,
+    AccountName,
+    FileName,
+    ProcessCommandLine,
+    InitiatingProcessFileName,
+    InitiatingProcessCommandLine,
+    EncodedCommandPresent,
+    DownloadCradle,
+    HiddenWindow,
+    BypassPolicy
+| extend AlertSeverity = "High"
+| extend RuleName = "Suspicious PowerShell Execution Detected"
+| order by TimeGenerated desc

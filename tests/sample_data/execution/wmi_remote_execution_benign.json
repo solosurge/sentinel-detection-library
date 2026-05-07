@@ -1,0 +1,32 @@
+[
+  {
+    "id": "wmi_ben_001",
+    "TimeGenerated": "2024-01-15T10:00:00Z",
+    "DeviceName": "WORKSTATION-01",
+    "AccountName": "alice",
+    "InitiatingProcessFileName": "explorer.exe",
+    "FileName": "cmd.exe",
+    "ProcessCommandLine": "cmd.exe /c dir",
+    "IsInteractiveShell": true
+  },
+  {
+    "id": "wmi_ben_002",
+    "TimeGenerated": "2024-01-15T10:05:00Z",
+    "DeviceName": "WORKSTATION-02",
+    "AccountName": "bob",
+    "InitiatingProcessFileName": "services.exe",
+    "FileName": "powershell.exe",
+    "ProcessCommandLine": "powershell.exe Get-Service",
+    "IsInteractiveShell": false
+  },
+  {
+    "id": "wmi_ben_003",
+    "TimeGenerated": "2024-01-15T10:10:00Z",
+    "DeviceName": "SERVER-01",
+    "AccountName": "svcaccount",
+    "InitiatingProcessFileName": "taskhost.exe",
+    "FileName": "cmd.exe",
+    "ProcessCommandLine": "cmd.exe /c cleanup.bat",
+    "IsInteractiveShell": false
+  }
+]
